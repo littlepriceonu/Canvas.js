@@ -38,9 +38,25 @@
     ball.draw()
 
     var isdown = false;
+    var x, y = 0;
+
 
     addEventListener("mousedown", () => {
         isdown = true;
+    })
+
+    addEventListener("mousemove", event => {
+        if (isdown) {
+            x = event.x
+            y = event.y
+            ball.x = x;
+            ball.y = y;
+            console.log(x, y)
+        }
+    })
+    
+    addEventListener("mouseup", event => {
+        isdown = false;
     })
 
     var xgoback = false;
@@ -48,17 +64,17 @@
 
     function animate() {
         ctx.clearRect(0, 0, innerWidth, innerHeight);
-        if (!xgoback) {
+        if (!xgoback && !isdown) {
             ball.x += 3;
         }
-        else {
+        else if (!isdown) {
             ball.x -= 3;
         }
 
-        if (!ygoback) {
+        if (!ygoback && !isdown) {
             ball.y += 3;
         }
-        else {
+        else if (!isdown) {
             ball.y -= 3;
         }
 
