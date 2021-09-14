@@ -37,6 +37,12 @@
     var ball = new circle(500, 350, 50, 0, 2*Math.PI)
     ball.draw()
 
+    var isdown = false;
+
+    addEventListener("mousedown", () => {
+        isdown = true;
+    })
+
     var xgoback = false;
     var ygoback = false;
 
@@ -81,5 +87,5 @@
         canvas.width = innerWidth;
     })
 
-    setInterval(animate, 1)
+    setInterval(animate, 10)
 </script>
