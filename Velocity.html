@@ -26,6 +26,11 @@
             this.endpoint = endpoint;
         }
 
+        move(x, y) {
+            ball.x = x;
+            ball.y = y;
+        }
+
         draw() {
             ctx.beginPath();
             ctx.arc(this.x, this.y, this.radius, this.startpoint, this.endpoint);
@@ -59,42 +64,37 @@
         isdown = false;
     })
 
-    var xgoback = false;
-    var ygoback = false;
+    var xvelocity = 0;
+    var yvelocity = 1;
+    
+    var touchingground = false;
 
     function animate() {
         ctx.clearRect(0, 0, innerWidth, innerHeight);
-        if (!xgoback && !isdown) {
-            ball.x += 3;
-        }
-        else if (!isdown) {
-            ball.x -= 3;
-        }
-
-        if (!ygoback && !isdown) {
-            ball.y += 3;
-        }
-        else if (!isdown) {
-            ball.y -= 3;
+        
+        if (ball.y < innerHeight && !isdown) {
+            yvelocity += 2
+            touchingground = false;
         }
 
+        // fix the fact that the ball doesn't stop bouncing its annoying me 😑
 
-        if (ball.y+ball.radius >= innerHeight) {
-            ygoback = true;
+        if (ball.y+ball.radius >= innerHeight && !isdown) {
+            if (yvelocity >= 1 && !touchingground) {
+                touchingground = true;
+                yvelocity = -yvelocity+yvelocity/2
+            }
         }
 
-        if (ball.y-ball.radius <= 0) {
-            ygoback = false;
+        
+
+        if (isdown) {
+            
         }
 
-        if (ball.x+ball.radius >= innerWidth) {
-            xgoback = true;
+        if (!isdown) {
+            ball.move(ball.x, ball.y += yvelocity)
         }
-
-        if (ball.x-ball.radius <= 0) {
-            xgoback = false;
-        }
-
         ball.draw()
     }
 
