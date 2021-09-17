@@ -72,18 +72,13 @@
     function animate() {
         ctx.clearRect(0, 0, innerWidth, innerHeight);
 
-        if (touchingground  && yvelocity == -2) {
-            console.log(yvelocity)
-            yvelocity = 0
-            console.log(yvelocity)
-        }
-
         if (ball.y < innerHeight && !isdown) {
             yvelocity += 2
+            if (touchingground )
             touchingground = false;
         }
 
-        // fix the fact that the ball doesn't stop bouncing its annoying me 😑
+        // fix the fact that the ball doesn't stop bouncing its annoying me 😑 (really trying rn)
 
         if (ball.y+ball.radius >= innerHeight && !isdown) {
             if (yvelocity >= 1 && !touchingground) {
