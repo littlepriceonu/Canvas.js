@@ -56,7 +56,6 @@
             y = event.y
             ball.x = x;
             ball.y = y;
-            console.log(x, y)
         }
     })
     
@@ -67,27 +66,39 @@
     var xvelocity = 0;
     var yvelocity = 1;
     
+    var gravity = 2;
+    var maxspeed = 40
+
     var touchingground = false;
 
     function animate() {
+        var dontadd = false;
         ctx.clearRect(0, 0, innerWidth, innerHeight);
 
-        if (touchingground  && yvelocity == -2) {
+        if (touchingground && yvelocity == -2) {
             console.log(yvelocity)
-            yvelocity = 0
-            console.log(yvelocity)
+            if (!yvelocity >= maxspeed) {
+                yvelocity += yvelocity * gravity
+            }
+            else {
+                yvelocity = yvelocity - maxspeed
+            }
         }
 
         if (ball.y < innerHeight && !isdown) {
-            yvelocity += 2
+            yvelocity +=
             touchingground = false;
         }
 
         // fix the fact that the ball doesn't stop bouncing its annoying me 😑
 
         if (ball.y+ball.radius >= innerHeight && !isdown) {
+            //yvelocity >= 1 &&
             if (yvelocity >= 1 && !touchingground) {
                 touchingground = true;
+
+                // problem lies here, The bug happens when it inverts then instantly adds 2
+
                 yvelocity = -yvelocity+yvelocity/2
             }
         }
