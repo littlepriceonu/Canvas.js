@@ -66,8 +66,8 @@
     var xvelocity = 0;
     var yvelocity = 1;
     
-    var gravity = 2;
-    var maxspeed = 5;
+    var gravity = 3;
+    var maxspeed = 50;
 
     var touchingground = false;
 
@@ -75,15 +75,21 @@
         var dontadd = false;
         ctx.clearRect(0, 0, innerWidth, innerHeight);
 
-        if (touchingground && yvelocity == -2) {
-            console.log(yvelocity)
-        }
         if (ball.y < innerHeight && !isdown) {
-            if (!yvelocity >= maxspeed) {
-                yvelocity += gravity
+            if (yvelocity >= maxspeed) {
+                yvelocity = maxspeed
+                console.log("subbed!", yvelocity)
+                console.log(yvelocity > maxspeed)
             }
             else {
-                yvelocity = yvelocity - maxspeed
+                if (yvelocity+gravity < 0) {
+                    console.log("error!! gravity:", gravity, "yvelocity:", yvelocity)
+                }
+                else {
+                    console.log("added!", yvelocity)
+                    yvelocity += yvelocity+gravity
+                    // !!! FIND OUT WHAT IS INVERTING IT PLEASE I SWEAR TO GOD
+                }
             }
             touchingground = false;
         }
