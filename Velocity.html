@@ -67,7 +67,7 @@
     var yvelocity = 1;
     
     var gravity = 2;
-    var maxspeed = 40
+    var maxspeed = 5;
 
     var touchingground = false;
 
@@ -77,20 +77,18 @@
 
         if (touchingground && yvelocity == -2) {
             console.log(yvelocity)
+        }
+        if (ball.y < innerHeight && !isdown) {
             if (!yvelocity >= maxspeed) {
-                yvelocity += yvelocity * gravity
+                yvelocity += gravity
             }
             else {
                 yvelocity = yvelocity - maxspeed
             }
-        }
-
-        if (ball.y < innerHeight && !isdown) {
-            yvelocity +=
             touchingground = false;
         }
 
-        // fix the fact that the ball doesn't stop bouncing its annoying me 😑
+        // fix the fact that the ball doesn't stop bouncing its annoying me 😑 (really trying rn)
 
         if (ball.y+ball.radius >= innerHeight && !isdown) {
             //yvelocity >= 1 &&
