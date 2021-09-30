@@ -11,6 +11,14 @@
 </body>
 
 <script>
+    var xvelocity = 0;
+    var yvelocity = 1;
+    
+    var gravity = 3;
+    var maxspeed = 50;
+
+    var touchingground = false;
+
     var cavnas = document.getElementById('canvas');
     var ctx = canvas.getContext('2d');
     canvas.width = innerWidth
@@ -56,6 +64,7 @@
             y = event.y
             ball.x = x;
             ball.y = y;
+            yvelocity = 0
         }
     })
     
@@ -63,27 +72,28 @@
         isdown = false;
     })
 
-    var xvelocity = 0;
-    var yvelocity = 1;
-    
-    var gravity = 2;
-    var maxspeed = 5;
-
-    var touchingground = false;
-
     function animate() {
+        if (yvelocity < 0) {
+            // make this better because yes
+            gravity = -yvelocity/gravity
+        }
+        else {
+            gravity = yvelocity/gravity
+        }
         var dontadd = false;
         ctx.clearRect(0, 0, innerWidth, innerHeight);
 
-        if (touchingground && yvelocity == -2) {
-            console.log(yvelocity)
-        }
         if (ball.y < innerHeight && !isdown) {
-            if (!yvelocity >= maxspeed) {
-                yvelocity += gravity
+            if (yvelocity >= maxspeed) {
+                yvelocity = maxspeed
+                console.log("subbed!", yvelocity)
+                console.log(yvelocity > maxspeed)
             }
             else {
-                yvelocity = yvelocity - maxspeed
+                console.log("added! going to be:", yvelocity+gravity, "gravity:", gravity, "yvelocity:", yvelocity)
+                yvelocity += gravity
+                console.log("added done! now is", yvelocity)
+                // !!! FIND OUT WHAT IS INVERTING IT PLEASE I SWEAR TO GOD
             }
             touchingground = false;
         }
@@ -97,7 +107,7 @@
 
                 // problem lies here, The bug happens when it inverts then instantly adds 2
 
-                yvelocity = -yvelocity+yvelocity/2
+                yvelocity = -yvelocity/2
             }
         }
 
