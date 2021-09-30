@@ -1,0 +1,119 @@
+<style>
+    canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+</style>
+
+<body>
+    <canvas id="canvas"></canvas>
+</body>
+
+<script>
+    var cavnas = document.getElementById('canvas');
+    var ctx = canvas.getContext('2d');
+    canvas.width = innerWidth
+    canvas.height = innerHeight
+
+
+    class circle {
+        constructor (x, y, radius, startpoint, endpoint) {
+            this.x = x;
+            this.y = y;
+            this.radius = radius;
+            this.startpoint = startpoint;
+            this.endpoint = endpoint;
+        }
+
+        draw() {
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.radius, this.startpoint, this.endpoint);
+            ctx.stroke();
+        }
+    }
+
+
+    var ball = new circle(500, 350, 50, 0, 2*Math.PI)
+    ball.draw()
+
+    var isdown = false;
+    var x, y = 0;
+
+
+    addEventListener("mousedown", () => {
+        isdown = true;
+    })
+
+    addEventListener("mousemove", event => {
+        if (isdown) {
+            x = event.x
+            y = event.y
+            ball.x = x;
+            ball.y = y;
+            console.log(x, y)
+        }
+    })
+    
+    addEventListener("mouseup", event => {
+        isdown = false;
+    })
+
+    var xgoback = false;
+    var ygoback = false;
+
+    var space = 32
+
+    var jump = false;
+
+    addEventListener("keydown", event => {
+        if (event.keyCode == space) {
+            jump = true;
+        }
+    })
+
+    var velocity = 3
+
+    function animate() {
+        ctx.clearRect(0, 0, innerWidth, innerHeight);
+        //if (!xgoback && !isdown) {
+        //    ball.x += 3;
+        //}
+        //else if (!isdown) {
+        //   ball.x -= 3;
+        //}
+
+        if (!ygoback && !isdown) {
+            ball.y += 3;
+        }
+        else if (!isdown) {
+            ball.y -= 3;
+        }
+
+
+        if (ball.y+ball.radius >= innerHeight) {
+            ygoback = true;
+        }
+
+        if (ball.y-ball.radius <= 0) {
+            ygoback = false;
+        }
+
+        if (ball.x+ball.radius >= innerWidth) {
+            xgoback = true;
+        }
+
+        if (ball.x-ball.radius <= 0) {
+            xgoback = false;
+        }
+
+        ball.draw()
+    }
+
+    addEventListener("resize", () => {
+        canvas.height = innerHeight;
+        canvas.width = innerWidth;
+    })
+
+    setInterval(animate, 10)
+</script>
