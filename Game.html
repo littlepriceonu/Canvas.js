@@ -59,10 +59,13 @@
         isdown = false;
     })
 
-    var xgoback = false;
-    var ygoback = false;
-
     var space = 32
+
+    var d = 68
+    var moveright = false;
+
+    var a = 65
+    var moveleft = false;
 
     var jump = false;
 
@@ -70,9 +73,25 @@
         if (event.keyCode == space) {
             jump = true;
         }
+        if (event.keyCode == a) {
+            moveleft = true;
+        }
+        if (event.keyCode == d) {
+            moveright = true;
+        }
     })
 
-    var velocity = 3
+    addEventListener('keyup', event => {
+        if (event.keyCode == a) {
+            moveleft = false;
+        }
+        if (event.keyCode == d) {
+            moveright = false;
+        }
+    })
+
+    var velocity = 2;
+    var grounded = false;
 
     function animate() {
         ctx.clearRect(0, 0, innerWidth, innerHeight);
@@ -83,28 +102,32 @@
         //   ball.x -= 3;
         //}
 
-        if (!ygoback && !isdown) {
-            ball.y += 3;
+        if (moveright) {
+            ball.x += 5
         }
-        else if (!isdown) {
-            ball.y -= 3;
-        }
-
-
-        if (ball.y+ball.radius >= innerHeight) {
-            ygoback = true;
+        if (moveleft) {
+            ball.x -= 5
         }
 
-        if (ball.y-ball.radius <= 0) {
-            ygoback = false;
+        if (jump && grounded) {
+            velocity = -50
+            ball.y += velocity
+            jump = false;
+        }
+        
+        if (ball.y+ball.radius < innerHeight && !isdown) {
+            velocity += 2
+            ball.y += velocity
+            grounded = false
         }
 
-        if (ball.x+ball.radius >= innerWidth) {
-            xgoback = true;
+        if (ball.y+ball.radius == innerHeight) {
+            grounded = true
         }
 
-        if (ball.x-ball.radius <= 0) {
-            xgoback = false;
+        if (ball.y+ball.radius > innerHeight) {
+            ball.y -= ball.y - innerHeight + ball.radius
+            grounded = true
         }
 
         ball.draw()
