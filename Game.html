@@ -33,6 +33,21 @@
         }
     }
 
+    class Cube {
+        constructor(x, y, width, height, color, cancolide) {
+            this.x = x;
+            this.y = y;
+            this.cancolide = cancolide;
+            this.width = width;
+            this.height = height;
+            this.color = color;
+        }
+
+        draw() {
+            ctx.fillStyle = this.color;
+            ctx.fillRect(this.x, this.y, this.width, this.height);
+        }
+    }
 
     var ball = new circle(500, 350, 50, 0, 2*Math.PI)
     ball.draw()
@@ -93,6 +108,8 @@
     var velocity = 2;
     var grounded = false;
 
+    var cube = new Cube(150, 150, 100, 100, 'green', false)
+
     function animate() {
         ctx.clearRect(0, 0, innerWidth, innerHeight);
         //if (!xgoback && !isdown) {
@@ -131,6 +148,7 @@
         }
 
         ball.draw()
+        cube.draw()
     }
 
     addEventListener("resize", () => {
