@@ -16,28 +16,24 @@
     c.height = innerHeight
 
     class CanvasManager {
-        constructor (Canvas, updatecallback, clearonupdate) {
+        constructor (Canvas, updateCallBack, clearOnUpdate) {
             this.canvas = Canvas
             this.ctx = Canvas.getContext("2d");
-            this.updatecallback = updatecallback;
-            this.callbacklength = updatecallback.length
-            this.clearonupdate = clearonupdate;
+            this.updatecallback = updateCallBack;
+            this.clearonupdate = clearOnUpdate;
         }
 
-        update () {
-            if (this.clearonupdate) {
-                this.ctx.clearRect(0, 0, window.innerWidth, innerHeight)
-            }
-            for (let i = 0; i < this.callbacklength; i++) {
-                updatecallback[i](this.canvas)
-            }
+        worldUpdate() {
+            console.log(this.updatecallback)
+
+
         }
 
         startUpdate() {
-            setInterval(this.update, 10);
+            setInterval(this.worldUpdate, 10);
         }
 
-        addcallback (func) {
+        addCallBack (func) {
             this.updatecallback.push(func)
         }
     }
@@ -86,6 +82,7 @@
     var ygoback = false;
 
     function animate(canvas) {
+        console.log("update")
         if (!xgoback && !isdown) {
             ball.x += 3;
         }
@@ -121,8 +118,8 @@
     }
 
     addEventListener("resize", () => {
-        canvas.height = innerHeight;
-        canvas.width = innerWidth;
+        c.height = innerHeight;
+        c.width = innerWidth;
     })
     var canvasmanager = new CanvasManager(c, [animate], true)
     canvasmanager.startUpdate()
