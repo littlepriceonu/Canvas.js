@@ -1,20 +1,23 @@
 
 
 class CanvasManager {
-    constructor (Canvas, updateCallBack, clearOnUpdate) {
+    constructor (Canvas, updateCallBack, clearOnUpdate, paused) {
         this.canvas = Canvas
         this.ctx = Canvas.getContext("2d");
         this.updatecallback = updateCallBack;
         this.clearonupdate = clearOnUpdate;
+        this.paused = paused
     }
 
     worldUpdate() {
-        if (this.clearonupdate) {
-            this.ctx.clearRect(0, 0, innerWidth, innerHeight)
-        }
+        if (!this.paused) {
+            if (this.clearonupdate) {
+                this.ctx.clearRect(0, 0, innerWidth, innerHeight)
+            }
 
-        for (let i=0; i < this.updatecallback.length; i++) {
-            this.updatecallback[i](this.ctx)
+            for (let i=0; i < this.updatecallback.length; i++) {
+                this.updatecallback[i](this.ctx)
+            }
         }
     }
 
@@ -57,7 +60,7 @@ class CanvasManager {
 
 /* TODO: 
     (Add Ideas Here)
-    1: add a file system for registered objects to save x, y or anything else in the object??
+    1: add a file system for registered objects to save x, y or anything else in the object?? (would have to switch to node and a server)
 
     2:
 
@@ -141,11 +144,16 @@ function animate(ctx) {
         xgoback = false;
     }
 
-    ball.draw(ctx)
 }
 
-var canvasmanager = new CanvasManager(c, [animate], true)
+var canvasmanager = new CanvasManager(c, [animate], true, false)
 canvasmanager.startUpdate()
+
+// Start Drawing Ball
+
+canvasmanager.addCallBack(() => {
+    ball.draw(canvasmanager.ctx)
+})
 
 addEventListener("resize", () => {
     canvasmanager.fullScreenCanvas()
