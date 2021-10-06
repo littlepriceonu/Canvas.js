@@ -70,6 +70,25 @@ CanvasManager.createPlainCanvas('canvas', 'canvas')
 
 var c = document.getElementById('canvas');
 
+class CanvasImage {
+    constructor (src, width, height, x, y) {
+        this.image = new Image(width, height);
+        this.image.src = src;
+        this.width = width;
+        this.height = height;
+        this.x = x;
+        this.y = y;
+    }
+
+    changeImage (src) {
+        this.image.src = src
+    }
+
+    draw(ctx) {
+        ctx.drawImage(this.image, this.x, this.y, this.width, this.height)
+    }
+}
+
 class circle {
     constructor (x, y, radius, startpoint, endpoint) {
         this.x = x;
@@ -109,18 +128,18 @@ addEventListener("mouseup", event => {
     isdown = false;
 })
 
-var xgoback = false;
-var ygoback = false;
+var ballxgoback = false;
+var ballygoback = false;
 
 function animate(ctx) {
-    if (!xgoback && !isdown) {
+    if (!ballxgoback && !isdown) {
         ball.x += 3;
     }
     else if (!isdown) {
         ball.x -= 3;
     }
 
-    if (!ygoback && !isdown) {
+    if (!ballygoback && !isdown) {
         ball.y += 3;
     }
     else if (!isdown) {
@@ -129,32 +148,83 @@ function animate(ctx) {
 
 
     if (ball.y+ball.radius >= innerHeight) {
-        ygoback = true;
+        ballygoback = true;
     }
 
     if (ball.y-ball.radius <= 0) {
-        ygoback = false;
+        ballygoback = false;
     }
 
     if (ball.x+ball.radius >= innerWidth) {
-        xgoback = true;
+        ballxgoback = true;
     }
 
     if (ball.x-ball.radius <= 0) {
-        xgoback = false;
+        ballxgoback = false;
     }
 
 }
 
-var canvasmanager = new CanvasManager(c, [animate], true, false)
+
+// to animate ball add animate to call back
+var canvasmanager = new CanvasManager(c, [], true, false)
 canvasmanager.startUpdate()
 
 // Start Drawing Ball
 
-canvasmanager.addCallBack(() => {
-    ball.draw(canvasmanager.ctx)
+//canvasmanager.addCallBack(() => {
+//    ball.draw(canvasmanager.ctx)
+//})
+
+var dvdlogolink = "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/DVD-Video_Logo.svg/1200px-DVD-Video_Logo.svg.png"
+
+// random dvd logo link off of google. I do not own this
+
+var newimage = new CanvasImage(dvdlogolink, 100, 100, 100, 100)
+
+canvasmanager.addCallBack((ctx) => {
+    newimage.draw(ctx)
 })
 
 addEventListener("resize", () => {
     canvasmanager.fullScreenCanvas()
 })
+
+var logoxgoback = false;
+var logoygoback = false;
+
+function animateLogo(ctx) {
+    if (!logoxgoback && !isdown) {
+        newimage.x += 3;
+    }
+    else if (!isdown) {
+        newimage.x -= 3;
+    }
+
+    if (!logoygoback && !isdown) {
+        newimage.y += 3;
+    }
+    else if (!isdown) {
+        newimage.y -= 3;
+    }
+
+
+    if (newimage.y+newimage.height >= innerHeight) {
+        logoygoback = true;
+    }
+
+    if (newimage.y <= 0) {
+        logoygoback = false;
+    }
+
+    if (newimage.x+newimage.width >= innerWidth) {
+        logoxgoback = true;
+    }
+
+    if (newimage.x <= 0) {
+        logoxgoback = false;
+    }
+    newimage.draw(ctx)
+}
+
+canvasmanager.addCallBack(animateLogo)
