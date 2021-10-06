@@ -1,8 +1,9 @@
 # Phy.js
-Simple Physics Engine made with canvas
 
-#### All Code Stored In Phy.html
+Just Some Canvas Stuff I'm Working On.
 
 ---------------------------------------
 
-Currently Working On Velocity.html (Its velocity duh)
+Currently Working On CanvasManager.js
+
+Since I usually have problems setting up canvas I hope this can help when I need to set it up every time
