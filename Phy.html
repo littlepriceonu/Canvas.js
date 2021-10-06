@@ -62,20 +62,26 @@
     var xgoback = false;
     var ygoback = false;
 
+    var speed = 5
+    var clearpage = true;
+
     function animate() {
-        ctx.clearRect(0, 0, innerWidth, innerHeight);
+        if (clearpage) {
+            ctx.clearRect(0, 0, innerWidth, innerHeight);
+        }
+        
         if (!xgoback && !isdown) {
-            ball.x += 3;
+            ball.x += speed;
         }
         else if (!isdown) {
-            ball.x -= 3;
+            ball.x -= speed;
         }
 
         if (!ygoback && !isdown) {
-            ball.y += 3;
+            ball.y += speed;
         }
         else if (!isdown) {
-            ball.y -= 3;
+            ball.y -= speed;
         }
 
 
