@@ -2,6 +2,12 @@ var c = document.getElementById('canvas');
 c.width = innerWidth
 c.height = innerHeight
 
+/* TODO: 
+    (Add Ideas Here)
+    1: 
+
+*/
+
 class CanvasManager {
     constructor (Canvas, updateCallBack, clearOnUpdate) {
         this.canvas = Canvas
