@@ -1,12 +1,4 @@
-var c = document.getElementById('canvas');
-c.width = innerWidth
-c.height = innerHeight
 
-/* TODO: 
-    (Add Ideas Here)
-    1: 
-
-*/
 
 class CanvasManager {
     constructor (Canvas, updateCallBack, clearOnUpdate) {
@@ -42,7 +34,38 @@ class CanvasManager {
     removeCallBack(index) {
         this.updatecallback = this.updatecallback.filter(element => element != this.updatecallback[index])
     }
+
+    static createCanvasWithManager(className, id, updateCallBack, clearOnUpdate) {
+        let canvas = document.createElement('canvas')
+        document.body.appendChild(canvas)
+        canvas.width = innerWidth
+        canvas.height = innerHeight
+        canvas.id = id
+        canvas.className = className
+        return new CanvasManager(canvas, updateCallBack, clearOnUpdate)
+    }
+
+    static createPlainCanvas(className, id) {
+        let canvas = document.createElement('canvas')
+        document.body.appendChild(canvas)
+        canvas.width = innerWidth
+        canvas.height = innerHeight
+        canvas.id = id
+        canvas.className = className
+    }
 }
+
+/* TODO: 
+    (Add Ideas Here)
+    1: add a file system for registered objects to save x, y or anything else in the object??
+
+    2:
+
+*/
+
+CanvasManager.createPlainCanvas('canvas', 'canvas')
+
+var c = document.getElementById('canvas');
 
 class circle {
     constructor (x, y, radius, startpoint, endpoint) {
