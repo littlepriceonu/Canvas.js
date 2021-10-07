@@ -224,7 +224,7 @@ function animateLogo(ctx) {
     if (newimage.x <= 0) {
         logoxgoback = false;
     }
-    newimage.draw(ctx)
+
 }
 
 canvasmanager.addCallBack(animateLogo)
