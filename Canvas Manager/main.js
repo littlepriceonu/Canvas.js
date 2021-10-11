@@ -168,7 +168,7 @@ function animate(ctx) {
 
 
 // to animate ball add animate to call back
-var canvasmanager = new CanvasManager(c, [], true, false)
+var canvasmanager = new CanvasManager(c, [], true, false, 10)
 canvasmanager.startUpdate()
 
 // Start Drawing Ball
