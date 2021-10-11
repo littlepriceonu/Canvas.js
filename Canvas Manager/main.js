@@ -1,12 +1,13 @@
 
 
 class CanvasManager {
-    constructor (Canvas, updateCallBack, clearOnUpdate, paused) {
+    constructor (Canvas, updateCallBack, clearOnUpdate, paused, updateSpeed) {
         this.canvas = Canvas
         this.ctx = Canvas.getContext("2d");
         this.updatecallback = updateCallBack;
         this.clearonupdate = clearOnUpdate;
         this.paused = paused
+        this.updatespeed = updateSpeed;
     }
 
     worldUpdate() {
@@ -22,7 +23,7 @@ class CanvasManager {
     }
 
     startUpdate() {
-        setInterval(this.worldUpdate.bind(this), 10);
+        setInterval(this.worldUpdate.bind(this), this.updatespeed);
     }
 
     addCallBack (func) {
@@ -38,14 +39,14 @@ class CanvasManager {
         this.updatecallback = this.updatecallback.filter(element => element != this.updatecallback[index])
     }
 
-    static createCanvasWithManager(className, id, updateCallBack, clearOnUpdate) {
+    static createCanvasWithManager(className, id, updateCallBack, clearOnUpdate, paused, updateSpeed) {
         let canvas = document.createElement('canvas')
         document.body.appendChild(canvas)
         canvas.width = innerWidth
         canvas.height = innerHeight
         canvas.id = id
         canvas.className = className
-        return new CanvasManager(canvas, updateCallBack, clearOnUpdate)
+        return new CanvasManager(canvas, updateCallBack, clearOnUpdate, paused, updateSpeed)
     }
 
     static createPlainCanvas(className, id) {
