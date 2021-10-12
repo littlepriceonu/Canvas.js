@@ -43,14 +43,14 @@ class CanvasManager {
         this.updatecallback = this.updatecallback.filter(element => element != this.updatecallback[index])
     }
 
-    static createCanvasWithManager(className, id, updateCallBack, clearOnUpdate, paused, updateSpeed) {
+    static createCanvasWithManager(className, id, updateCallBack, clearOnUpdate, paused, updateSpeed, fillStyle) {
         let canvas = document.createElement('canvas')
         document.body.appendChild(canvas)
         canvas.width = innerWidth
         canvas.height = innerHeight
         canvas.id = id
         canvas.className = className
-        return new CanvasManager(canvas, updateCallBack, clearOnUpdate, paused, updateSpeed)
+        return new CanvasManager(canvas, updateCallBack, clearOnUpdate, paused, updateSpeed, fillStyle)
     }
 
     static createPlainCanvas(className, id) {
