@@ -69,4 +69,49 @@ class CanvasManager {
     }
 }
 
+class CanvasImage {
+    image: HTMLImageElement;
+    width: number;
+    height: number;
+    x: number;
+    y: number;
 
+    constructor (src, width, height, x, y) {
+        this.image = new Image(width, height);
+        this.image.src = src;
+        this.width = width;
+        this.height = height;
+        this.x = x;
+        this.y = y;
+    }
+
+    changeImage (src) {
+        this.image.src = src
+    }
+
+    draw(ctx) {
+        ctx.drawImage(this.image, this.x, this.y, this.width, this.height)
+    }
+}
+
+class circle {
+    x: number;
+    y: number
+    radius: number
+    startpoint: number
+    endpoint: number
+
+    constructor (x: number, y: number, radius: number, startpoint: number, endpoint: number) {
+        this.x = x;
+        this.y = y;
+        this.radius = radius;
+        this.startpoint = startpoint;
+        this.endpoint = endpoint;
+    }
+
+    draw(ctx) {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, this.startpoint, this.endpoint);
+        ctx.stroke();
+    }
+}
