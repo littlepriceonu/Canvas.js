@@ -63,14 +63,6 @@ class CanvasManager {
     }
 }
 
-/* TODO: 
-    (Add Ideas Here)
-    1: add a file system for registered objects to save x, y or anything else in the object?? (would have to switch to node and a server)
-
-    2:
-
-*/
-
 CanvasManager.createPlainCanvas('canvas', 'canvas')
 
 var c = document.getElementById('canvas');
@@ -110,7 +102,9 @@ class circle {
     }
 }
 
-var ball = new circle(500, 350, 50, 0, 2*Math.PI)
+// ---------- Start Deletable ----------
+
+var ball = new circle(innerWidth/2, innerHeight/2, 5, 0, 2*Math.PI)
 
 var isdown = false;
 var x, y = 0;
@@ -124,6 +118,8 @@ addEventListener("mousemove", event => {
     if (isdown) {
         //x = event.x
         //y = event.y
+        console.log(event.x)
+        console.log(event.y)
         ball.x = event.x;
         ball.y = event.y;
     }
@@ -133,103 +129,24 @@ addEventListener("mouseup", event => {
     isdown = false;
 })
 
-var ballxgoback = false;
-var ballygoback = false;
-
-function animate(ctx) {
-    if (!ballxgoback && !isdown) {
-        ball.x += 3;
-    }
-    else if (!isdown) {
-        ball.x -= 3;
-    }
-
-    if (!ballygoback && !isdown) {
-        ball.y += 3;
-    }
-    else if (!isdown) {
-        ball.y -= 3;
-    }
-
-
-    if (ball.y+ball.radius >= innerHeight) {
-        ballygoback = true;
-    }
-
-    if (ball.y-ball.radius <= 0) {
-        ballygoback = false;
-    }
-
-    if (ball.x+ball.radius >= innerWidth) {
-        ballxgoback = true;
-    }
-
-    if (ball.x-ball.radius <= 0) {
-        ballxgoback = false;
-    }
-
-}
-
-
-// to animate ball add animate to call back
-var canvasmanager = new CanvasManager(c, [], true, false, 10, 'white')
-canvasmanager.startUpdate()
-
 // Start Drawing Ball
 
-//canvasmanager.addCallBack(() => {
-//    ball.draw(canvasmanager.ctx)
-//})
-
-var dvdlogolink = "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/DVD-Video_Logo.svg/1200px-DVD-Video_Logo.svg.png"
-
-// random dvd logo link off of google. I do not own this
-
-var newimage = new CanvasImage(dvdlogolink, 100, 100, 100, 100)
-
-canvasmanager.addCallBack((ctx) => {
-    newimage.draw(ctx)
-})
+// ---------- End Deletable ----------
 
 addEventListener("resize", () => {
     canvasmanager.fullScreenCanvas()
 })
 
-var logoxgoback = false;
-var logoygoback = false;
-
-function animateLogo(ctx) {
-    if (!logoxgoback && !isdown) {
-        newimage.x += 3;
-    }
-    else if (!isdown) {
-        newimage.x -= 3;
-    }
-
-    if (!logoygoback && !isdown) {
-        newimage.y += 3;
-    }
-    else if (!isdown) {
-        newimage.y -= 3;
-    }
-
-
-    if (newimage.y+newimage.height >= innerHeight) {
-        logoygoback = true;
-    }
-
-    if (newimage.y <= 0) {
-        logoygoback = false;
-    }
-
-    if (newimage.x+newimage.width >= innerWidth) {
-        logoxgoback = true;
-    }
-
-    if (newimage.x <= 0) {
-        logoxgoback = false;
-    }
-
+function animate(ctx) {
+    // Your Code Here
 }
 
-canvasmanager.addCallBack(animateLogo)
+var canvasmanager = new CanvasManager(c, [], true, false, 10, 'white')
+
+canvasmanager.addCallBack(animate)
+
+canvasmanager.addCallBack(() => {
+    ball.draw(canvasmanager.ctx)
+})
+
+canvasmanager.startUpdate()
