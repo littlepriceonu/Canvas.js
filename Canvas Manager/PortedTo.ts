@@ -9,7 +9,8 @@ class CanvasManager {
 
     constructor (Canvas: HTMLCanvasElement, updateCallBack: Function[], clearOnUpdate: boolean, paused: boolean, updateSpeed: number, fillStyle: string) {
         this.canvas = Canvas
-        this.ctx = Canvas.getContext("2d");
+        // <CanvasRenderingContext2D> is telling typescript that we expect the function to return a CanvasRenderingContext2D
+        this.ctx = <CanvasRenderingContext2D>Canvas.getContext("2d");
         this.updatecallback = updateCallBack;
         this.clearonupdate = clearOnUpdate;
         this.paused = paused
